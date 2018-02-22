@@ -16,7 +16,7 @@ class Customer:
 
   #make him start moving
   def arrive(self):
-    self.vx = 5
+    self.vx = 30
 
   #give customer velocity
   def move(self,time):

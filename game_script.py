@@ -1,4 +1,4 @@
-#!/usr/bin.python
+#!/usr/bin/python
 
 import pygame, sys
 from pygame.locals import *
@@ -12,8 +12,6 @@ import bartender
 import beer
 from game_colors import *
 
-#JACKWROTETHIS
-
 HEIGHT = 600
 WIDTH = 600
 
@@ -22,6 +20,10 @@ TABLE1_Y = 250
 TABLE2_Y = 350
 TABLE3_Y = 450
 TABLE4_Y = 550
+
+locx = 473
+MIN_Y = 263
+MAX_Y = 563
 
 FPS = 30
 
@@ -37,8 +39,8 @@ def draw_world(surf):
     # fill in sky/base layer
     surf.fill(BACKGROUND)
 
-    # draw tables
-    table1 = pygame.draw.rect(surf,TABLE,(0,250,450,50))
+    # draw 4 tables
+    pygame.draw.rect(surf,TABLE,(0,250,450,50))
     table2 = pygame.draw.rect(surf,TABLE,(0,350,450,50))
     table3 = pygame.draw.rect(surf,TABLE,(0,450,450,50))
     table4 = pygame.draw.rect(surf,TABLE,(0,550,450,50))
@@ -53,26 +55,30 @@ def draw_world(surf):
 # add more functions for logic as necessary
 
 def main():
+    pygame.init()
+    fpsClock = pygame.time.Clock()
+    surf = pygame.display.set_mode((WIDTH,HEIGHT),0,32)
+    # beers on table
+    beer1 = beer.Beer(435, TABLE1_Y-17)
+    beer2 = beer.Beer(435, TABLE2_Y-17)
+    beer3 = beer.Beer(435, TABLE3_Y-17)
+    beer4 = beer.Beer(435, TABLE4_Y-17)
+    # draw bartender
+    craig = bartender.Bartender(locx,MIN_Y)
+    # draw customers
+    my_customer = customer.Customer(0,TABLE1_Y-15)
+    objs = [beer1,beer2,beer3,beer4,craig,my_customer]
+
     while True:
-        pygame.init()
-        fpsClock = pygame.time.Clock()
-        surf = pygame.display.set_mode((WIDTH,HEIGHT),0,32)
-        # beers on table
-        beer1 = beer.Beer(435, TABLE1_Y-17)
-        beer2 = beer.Beer(435, TABLE2_Y-17)
-        beer3 = beer.Beer(435, TABLE3_Y-17)
-        beer4 = beer.Beer(435, TABLE4_Y-17)
-        # draw bartender
-        craig = bartender.Bartender(TABLE_X+23,TABLE1_Y+13)
-        # draw customers
-        my_customer = customer.Customer(0,TABLE1_Y-15)
-        objs = [beer1,beer2,beer3,beer4,craig,my_customer]
+        
+
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    craig.moveSelf(1)
-                if event.key == pygame.K_DOWN:
-                    craig.moveSelf(0)
+                if event.key == K_UP:
+                    craig.moveSelf(-100)
+                if event.key == K_DOWN:
+                    craig.moveSelf(100)
+                
 
             if event.type == QUIT:
                 pygame.quit()
