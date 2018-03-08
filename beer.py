@@ -3,20 +3,33 @@ from game_colors import *
 
 class Beer:
     def __init__(self,x,y):
-        self.x = x
-        self.y = y
-        #self.rect = pygame.Rect((self.x,self.y,20.35))
-        self.v_x = 0.0
-        self.r = (0,0,0,0)
+
+        self.rect = pygame.Rect((x,y,20,35))
+        self.v_x = 0
+
 
     def move(self,time):
-        self.x = self.x + self.v_x*time
+        self.rect.x = self.rect.x + self.v_x*time
+
+    def hitBy(self,obj):
+        return self.rect.colliderect(obj.getRect())
+
+    def isMoving(self):
+        if(self.v_x != 0):
+            return True
+        else:
+            return False
 
     def getRect(self):
         return self.rect
+
+    def launch(self):
+        self.v_x = -40
+
+    def reset(self):
+        self.v_x = 0
+        self.rect.x = 435
         
     def draw(self,surf):
-        self.r = pygame.Rect((0,0,20,35))
-        self.r.center = (self.x, self.y)
-        pygame.draw.rect(surf,GLASS,self.r)
+        pygame.draw.rect(surf,GLASS,self.rect)
         

@@ -4,26 +4,28 @@ import pygame
 from pygame.locals import *
 import sys
 from game_colors import *
+import random
+import math
 
 class Customer:
   #initialize with these parameters
   def __init__(self,x,y):
     self.locationx = x
     self.locationy = y
-    #self.rect = pygame.Rect((self.locationx,self.locationy,30,30))
     self.vx = 0
+    self.rect = pygame.Rect((self.locationx,self.locationy,30,30))
     self.r = (0,0,0,0)
 
   #make him start moving
   def arrive(self):
-    self.vx = 30
+    self.vx = random.random()*200
 
   #give customer velocity
   def move(self,time):
     self.locationx = self.locationx + self.vx*time
 
-  #def hitBy(self,beer):
-   #   return self.rect.colliderect(beer.getRect())
+  def getRect(self):
+    return self.r
     
   #make him reset to original position
   def reset(self):

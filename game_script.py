@@ -32,7 +32,7 @@ rand = random.random()
 # define game world
 def draw_world(surf):
     # surf is a pygame surface
-    pygame.display.set_caption('Block Tapper: The Customer is Always Right')
+    pygame.display.set_caption('Block Tapper: Serve Beers With the Force')
 
     # fill in sky/base layer
     surf.fill(BACKGROUND)
@@ -109,9 +109,9 @@ def main():
         rgb = read_arduino(s)
         if(rgb is None):
             continue # skip, and try again next time
-        if rgb[0] == 1.0:
+        if rgb[0] > 150.0:
             craig.moveSelf(-100)
-        if rgb[0] == 0.0:
+        if rgb[0] < 50.0:
             craig.moveSelf(100)
         if rgb[1] < 25.0:
             if craig.locationy == 263:
